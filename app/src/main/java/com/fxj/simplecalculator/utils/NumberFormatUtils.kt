@@ -40,7 +40,7 @@ object NumberFormatUtils {
     }
 
     fun formatNormalStyleFormula(formula: String): String {
-        return formula.replace(java.lang.String.valueOf(KeyboardUtils.SYMBOL_COMMA).toRegex(), "")
+        return formula.replace(java.lang.String.valueOf(ButtonUtils.TEXT_COMMA).toRegex(), "")
     }
 
     private fun findNextNumberStartIndex(from: Int, formula: String): Int {
@@ -52,20 +52,7 @@ object NumberFormatUtils {
                 if (Character.isDigit(c)) {
                     index = i
                     break
-                } else if (c == KeyboardUtils.SYMBOL_E) {
-                    if (i == from || Character.isDigit(formula[i - 1])) {
-                        if (i < formula.length - 1) {
-                            val cn = formula[i + 1]
-                            if (Character.isDigit(cn)) {
-                                ++i
-                            }
-                            ++i
-                            while (i < formula.length && Character.isDigit(formula[i])) {
-                                ++i
-                            }
-                        }
-                    }
-                } else if (c == KeyboardUtils.SYMBOL_DOT) {
+                } else if (c == ButtonUtils.BUTTON_TEXT_DOT) {
                     ++i
                     while (i < formula.length && Character.isDigit(formula[i])) {
                         ++i
@@ -82,7 +69,7 @@ object NumberFormatUtils {
         if (from < formula.length) {
             for (i in from until formula.length) {
                 val c = formula[i]
-                if (Character.isDigit(c) || KeyboardUtils.SYMBOL_DOT === c) {
+                if (Character.isDigit(c) || ButtonUtils.BUTTON_TEXT_DOT === c) {
                     s.append(c)
                 } else {
                     break
@@ -102,9 +89,8 @@ object NumberFormatUtils {
             valid = false
         }
         if (valid) {
-            val dotIndex: Int = number.indexOf(KeyboardUtils.SYMBOL_DOT)
-            val eIndex: Int = number.indexOf(KeyboardUtils.SYMBOL_E)
-            formated = if (dotIndex == -1 || eIndex != -1) {
+            val dotIndex: Int = number.indexOf(ButtonUtils.BUTTON_TEXT_DOT)
+            formated = if (dotIndex == -1) {
                 formatCommaStyle(num)
             } else {
                 val integer = number.substring(0, dotIndex)

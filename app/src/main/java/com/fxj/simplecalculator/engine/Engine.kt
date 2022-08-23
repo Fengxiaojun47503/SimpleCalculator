@@ -28,8 +28,8 @@ class Engine {
 
         private var mSymbols = Symbols()
 
-        fun getSuggested(equationContent: String?, original: String?, button: Pair<Int, String>, isCommaStyle: Boolean): String {
-            var original = original
+        fun getSuggested(equationContent: String?, origin: String?, button: Pair<Int, String>, isCommaStyle: Boolean): String {
+            var original = origin
             original = original ?: java.lang.String.valueOf(ButtonUtils.BUTTON_TEXT_0)
             original = NumberFormatUtils.formatNormalStyleFormula(original!!)
             var s: String = original
@@ -69,12 +69,10 @@ class Engine {
             return s
         }
 
-        private fun deleteType(original: String): String {
-            var original = original
+        private fun deleteType(origin: String): String {
+            var original = origin
             if (!TextUtils.isEmpty(original)) {
                 val ol = original.length
-                val pre1 = if (ol > 0) original[ol - 1] else '\u0000'
-                var deleateIndex: Int = -1
                 original = original.substring(0, ol - 1)
 
                 var hasNumber = false
@@ -91,9 +89,9 @@ class Engine {
             return original
         }
 
-        private fun normalType(equationContent: String, original: String, delta: String,): String {
+        private fun normalType(equationContent: String, original: String, delta0: String,): String {
             var original = original
-            var delta = delta
+            var delta = delta0
             val l = delta.length
             if (java.lang.String.valueOf(ButtonUtils.BUTTON_TEXT_0) == original) {
                 if (l != 1) {
@@ -188,7 +186,7 @@ class Engine {
                     } else {
                         var containOtherNum = false
                         for (i in indexSymbolDot + 1 until length) {
-                            if (str[i] != ButtonUtils.DIGIT_0) {
+                            if (str[i] != ButtonUtils.BUTTON_TEXT_0) {
                                 containOtherNum = true
                                 break
                             }
@@ -212,8 +210,8 @@ class Engine {
             return evaluate(input, commaStyle, NAN)
         }
 
-        fun evaluate(input: String, commaStyle: Boolean, originResult: String): String {
-            var input = input
+        fun evaluate(input0: String, commaStyle: Boolean, originResult: String): String {
+            var input = input0
             if (input.trim { it <= ' ' } == "" || TextUtils.equals(input, ButtonUtils.BUTTON_TEXT_0.toString())) {
                 return ButtonUtils.BUTTON_TEXT_0.toString()
             }
