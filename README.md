@@ -1,2 +1,4 @@
 # SimpleCalculator
-A simple calculator with jetpack compose
+这是一个基于compose构建的简单计算器，所有的ui界面均由compose组件构成，
+同时支持横竖切换显示、并可跟随系统深色主题模式自动切换，
+切换时计算的数据能够保持在界面显示无需重新输入。
