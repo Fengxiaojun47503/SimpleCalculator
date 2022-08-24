@@ -30,7 +30,10 @@ class Engine {
 
         fun getSuggested(equationContent: String?, origin: String?, button: Pair<Int, String>, isCommaStyle: Boolean): String {
             var original = origin
-            original = original ?: java.lang.String.valueOf(ButtonUtils.BUTTON_TEXT_0)
+            original = original ?: ""
+            if (original.equals(ButtonUtils.BUTTON_TEXT_0.toString())) {
+                original = ""
+            }
             original = NumberFormatUtils.formatNormalStyleFormula(original!!)
             var s: String = original
             val btnId = button.first
@@ -174,7 +177,12 @@ class Engine {
         }
 
 
-        fun isDividedByZero(str: String): Boolean {
+        fun isDividedByZero(input: String): Boolean {
+            val divIndex: Int = input.lastIndexOf(ButtonUtils.BUTTON_TEXT_DIV)
+            if (divIndex <= 0) {
+                return false
+            }
+            val str = input.substring(divIndex)
             val length = str.length
             return if (length >= 2 && ButtonUtils.BUTTON_TEXT_DIV == str[0]) {
                 if (str[1] != ButtonUtils.BUTTON_TEXT_0) {
