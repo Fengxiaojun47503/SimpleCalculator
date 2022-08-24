@@ -12,10 +12,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -30,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.fxj.simplecalculator.engine.Engine
 import com.fxj.simplecalculator.ui.theme.*
 import com.fxj.simplecalculator.utils.ButtonUtils
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -40,6 +38,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SimpleCalculatorTheme {
+                rememberSystemUiController().run {
+                    setSystemBarsColor(MaterialTheme.colors.background, !isSystemInDarkTheme())
+                }
                 var calculatorState by rememberSaveable {
                     mutableStateOf(CalculatorResult())
                 }
@@ -287,6 +288,7 @@ fun CalculatorButton(
             else if (!isSystemInDarkTheme())
                 ButtonBgColorLight else ButtonBgColorDark
         ),
+        contentPadding = PaddingValues(0.dp),
         onClick = { onClick(button) }
     ) {
         Text(
